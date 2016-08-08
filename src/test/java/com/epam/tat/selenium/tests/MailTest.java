@@ -3,6 +3,7 @@ package com.epam.tat.selenium.tests;
 
 import com.epam.tat.selenium.page.*;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -20,6 +21,7 @@ public class MailTest extends BasicTest {
         System.out.println("Login successful.");
         System.out.println("Verifying if login was successful");
         Assert.assertTrue(basePage.checkLogin(), "Login was insuccessful, logout button not found");
+       
         System.out.println("Verification passed");
     }
 

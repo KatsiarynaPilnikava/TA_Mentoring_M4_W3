@@ -14,6 +14,7 @@ public class LoginPage extends BasePage{
     private static final String INPUT_LOGIN_NAME = "Login";
     private static final String INPUT_PASSWORD_ID = "mailbox__password";
     private static final String LOGIN_BUTTON_ID = "mailbox__auth__button";
+    private static final String HIGHLIGHT_SCRIPT = "arguments[0].style.border='4px solid green'";
     
     @FindBys({
         @FindBy(id = INPUT_LOGIN_ID),
@@ -38,6 +39,7 @@ public class LoginPage extends BasePage{
         inputUser.sendKeys(user.getUsername());
         super.clearField(inputPassword);
         inputPassword.sendKeys(user.getPassword());
+        super.executeJS(HIGHLIGHT_SCRIPT, loginButton);
         loginButton.click();
 		return new BasePage(driver);
     }

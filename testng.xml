@@ -5,6 +5,8 @@
     <test name="E-Mail testing">
         <parameter name="browser" value="google_chrome"/>
         <parameter name="url" value="https://mail.ru/"/>
+        <parameter name="grid_url" value="http://localhost:4444/wd/hub"/>
+        <!--http://localhost:4444/wd/hub-->
         <classes>
             <class name="com.epam.tat.selenium.tests.MailTest"/>
         </classes>
