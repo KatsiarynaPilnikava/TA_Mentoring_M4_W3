@@ -37,7 +37,7 @@ public class ComposeMailPage extends BasePage {
     }
 
     public void saveAsDraft() {
-        super.mouseClick(saveAsDraftButton);
+        saveAsDraftButton.click();
         
     }
 

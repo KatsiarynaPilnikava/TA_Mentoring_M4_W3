@@ -2,7 +2,6 @@ package com.epam.tat.selenium.page;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,6 +22,7 @@ public class BasePage {
     private static final String HIGHLIGHT_SCRIPT = "arguments[0].style.border='4px solid green'";
     private static final String DISABLE_SCRIPT = "arguments[0].style.border=''";
     private static final String GET_PAGE_TITLE_SCRIPT = "return document.title;";
+    private static final String WAIT_FOR_PAGE_SCRIPT = "return document.readyState;";
     @FindBy(xpath = BODY)
     private WebElement page;
     @FindBy(xpath = NEW_MAIL_XPATH)
@@ -49,18 +49,18 @@ public class BasePage {
     }
 
 	public ComposeMailPage composeNewMail() {
-        newMailButton.click();
+		mouseClick(newMailButton);
         return new ComposeMailPage(driver);
     }
 
     public DraftsPage goToDraft() {
-        draftButton.click();
+         mouseClick(draftButton);
 		return new DraftsPage(driver);
         
     }
 
     public SentPage goToSent() {
-        sentButton.click();
+    	mouseClick(sentButton);
 		return new SentPage(driver);
     }
 
@@ -80,12 +80,14 @@ public class BasePage {
     public void mouseClick(WebElement element){
     	Actions action = new Actions(driver);
     	action.moveToElement(element).click().build().perform();
+    	js.executeScript(WAIT_FOR_PAGE_SCRIPT).toString().equals("complete");
+    	
     }
-    public static void executeJS(String script, WebElement element){
+    public static void highligtElement(WebElement element){
 		
-    	js.executeScript(script, element);
+    	js.executeScript(HIGHLIGHT_SCRIPT, element);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(HIGHLIGHT_TIME_MS);
         } catch (InterruptedException interruptedException) {
             System.out.println(String.format("Unexpected exception:\n %s", interruptedException));
         }
