@@ -5,13 +5,14 @@ import org.openqa.selenium.WebElement;
 
 public class JSUtil {
 	
+	private static final String WAIT_FOR_PAGE_SCRIPT = "return document.readyState;";
 	protected static JavascriptExecutor js;
 	
 	public static String getTitle(String script) {
         return js.executeScript(script).toString();
     }
-	public static void waitForPage(String script) {
-		js.executeScript(script).toString().equals("complete");
+	public static void waitForPage() {
+		js.executeScript(WAIT_FOR_PAGE_SCRIPT).toString().equals("complete");
 	}
 	 public static void highligtElement(WebElement element, String highLightScript, int timeout, String disable){
 			

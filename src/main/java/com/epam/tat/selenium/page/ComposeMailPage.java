@@ -51,9 +51,21 @@ public class ComposeMailPage extends BasePage {
             return false;
         }
     }
+    public boolean checkMailContent(String text){
+    	 try {
+             driver.findElement(By.xpath(String.format(MAIL_SENDTO_CHECK_XPATH, sendTo)));
+             driver.findElement(By.xpath(String.format(MAIL_TEXT_CHECK_XPATH, text)));
+             return true;
+         } catch (NoSuchElementException e) {
+             System.out.println("Element was not found\n" + e);
+             return false;
+         }
+    }
 
     public void sendMail() {
         page.sendKeys(Keys.chord(Keys.CONTROL, Keys.ENTER));
     }
+
+	
 
 }

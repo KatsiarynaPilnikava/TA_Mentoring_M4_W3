@@ -21,7 +21,7 @@ public class BasePage {
     private static final String LOGOUT_LINK_ID = "PH_logoutLink";
     private static final String BODY = "//body";
     private static final String GET_PAGE_TITLE_SCRIPT = "return document.title;";
-    private static final String WAIT_FOR_PAGE_SCRIPT = "return document.readyState;";
+    
     @FindBy(xpath = BODY)
     private WebElement page;
     @FindBy(xpath = NEW_MAIL_XPATH)
@@ -41,10 +41,6 @@ public class BasePage {
         System.out.println(String.format("Navigated to \"%s\" page", JSUtil.getTitle(GET_PAGE_TITLE_SCRIPT)));
     }
 
-
-   /* public static String getTitle() {
-        return js.executeScript(GET_PAGE_TITLE_SCRIPT).toString();
-    }*/
 
 	public ComposeMailPage composeNewMail() {
 		mouseClick(newMailButton);
@@ -79,7 +75,7 @@ public class BasePage {
     public void mouseClick(WebElement element){
     	Actions action = new Actions(driver);
     	action.moveToElement(element).click().build().perform();
-    	JSUtil.waitForPage(WAIT_FOR_PAGE_SCRIPT);
+    	JSUtil.waitForPage();
     	
     }
     
