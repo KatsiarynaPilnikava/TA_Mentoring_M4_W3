@@ -2,6 +2,8 @@ package com.epam.tat.selenium.tests;
 
 
 import com.epam.tat.selenium.page.*;
+import com.epam.tat.selenium.steps.Step;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -28,10 +30,7 @@ public class MailTest extends BasicTest {
     @Test(description = "compose email to be send to user2, subject and text fields should be generated automaticly", dependsOnGroups = "login test")
     public void composeMailTest() {
     	System.out.println("Attempting to open new window.");
-        subject = RandomStringUtils.randomAlphabetic(8);
-        text = RandomStringUtils.randomAlphabetic(12);
-        composeMailPage = basePage.composeNewMail();
-        composeMailPage.composeMail(user2.getUsername() + "@mail.ru", subject, text);
+        Step.composeMail(user2);
     }
 
     @Test(description = "after composing email press \"save mail\" button", groups = "save as draft", dependsOnMethods = "composeMailTest")

@@ -10,6 +10,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.JavascriptExecutor;
 
+import com.epam.tat.selenium.util.JSUtil;
+
 
 
 public class BasePage {
@@ -18,9 +20,6 @@ public class BasePage {
     private static final String SENT_XPATH = "//a[@href=\'/messages/sent/\']";
     private static final String LOGOUT_LINK_ID = "PH_logoutLink";
     private static final String BODY = "//body";
-    private static final int HIGHLIGHT_TIME_MS = 1000;
-    private static final String HIGHLIGHT_SCRIPT = "arguments[0].style.border='4px solid green'";
-    private static final String DISABLE_SCRIPT = "arguments[0].style.border=''";
     private static final String GET_PAGE_TITLE_SCRIPT = "return document.title;";
     private static final String WAIT_FOR_PAGE_SCRIPT = "return document.readyState;";
     @FindBy(xpath = BODY)
@@ -39,14 +38,13 @@ public class BasePage {
     public BasePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(this.driver, this);
-        js = (JavascriptExecutor) driver;
-        System.out.println(String.format("Navigated to \"%s\" page", getTitle()));
+        System.out.println(String.format("Navigated to \"%s\" page", JSUtil.getTitle(GET_PAGE_TITLE_SCRIPT)));
     }
 
 
-    public static String getTitle() {
+   /* public static String getTitle() {
         return js.executeScript(GET_PAGE_TITLE_SCRIPT).toString();
-    }
+    }*/
 
 	public ComposeMailPage composeNewMail() {
 		mouseClick(newMailButton);
@@ -74,23 +72,15 @@ public class BasePage {
     public void clearField(WebElement element){
     	element.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
     }
+    @Deprecated
     public void waitForPage(){
     	driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     }
     public void mouseClick(WebElement element){
     	Actions action = new Actions(driver);
     	action.moveToElement(element).click().build().perform();
-    	js.executeScript(WAIT_FOR_PAGE_SCRIPT).toString().equals("complete");
+    	JSUtil.waitForPage(WAIT_FOR_PAGE_SCRIPT);
     	
     }
-    public static void highligtElement(WebElement element){
-		
-    	js.executeScript(HIGHLIGHT_SCRIPT, element);
-        try {
-            Thread.sleep(HIGHLIGHT_TIME_MS);
-        } catch (InterruptedException interruptedException) {
-            System.out.println(String.format("Unexpected exception:\n %s", interruptedException));
-        }
-        js.executeScript(DISABLE_SCRIPT, element);
-    }
+    
 }
